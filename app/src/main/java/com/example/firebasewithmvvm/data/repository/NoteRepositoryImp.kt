@@ -1,6 +1,7 @@
 package com.example.firebasewithmvvm.data.repository
 
 import com.example.firebasewithmvvm.data.model.Note
+import com.example.firebasewithmvvm.util.UiState
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -12,9 +13,9 @@ import javax.inject.Inject
 
 class NoteRepositoryImp(val database: FirebaseFirestore) : NoteRepository {
 
-    override fun getNote(): List<Note> {
+    override fun getNote(): UiState<List<Note>> {
 
-        return arrayListOf(
+        /*val data = arrayListOf(
             Note("tt1",
                 "Mackey",
                 Date()
@@ -33,7 +34,15 @@ class NoteRepositoryImp(val database: FirebaseFirestore) : NoteRepository {
                 "tt4",
                 "Mackey",
                 Date()
-            ),
-        )
+            )
+        )*/
+
+        val data = listOf<Note>()
+
+        if (data.isNullOrEmpty()){
+            return UiState.Failure("Data is Empty")
+        }else{
+            return UiState.Success(data)
+        }
     }
 }
